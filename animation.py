@@ -13,38 +13,43 @@ t.speed(0)
 
 def playing_area(t):
     t.fillcolor("teal") 
-    t.begin_fill()
-    
     t.penup()
-    t.goto(-300, 300)
+    t.goto(-280, 280)
     t.pendown()
+    t.begin_fill()
     for i in range(4):
-        t.forward(600)
+        t.forward(560)
         t.right(90)
-    
     t.end_fill()
 
 playing_area(t)
 t.hideturtle()
-angle=random.randint(0,360)
+
 yertle = Turtle()
 yertle.color("blue")
 yertle.shape("turtle")
 yertle.penup() 
-yertle.setheading(angle) 
-
+yertle.setheading(65) 
 
 def move_forward(turtle):
-    turtle.forward(5)
-    
-    if turtle.xcor() >= 290 or turtle.xcor() <= -290:
-        turtle.right(angle-180)
-    if turtle.ycor() >= 290 or turtle.ycor() <= -290:
-        turtle.right(angle-180)
-        
+    turtle.forward(10)
 
+    if turtle.xcor() > 275:
+        turtle.setx(275)
+        turtle.setheading(180 - turtle.heading())
+    if turtle.xcor() < -275:
+        turtle.setx(-275)
+        turtle.setheading(180 - turtle.heading())
+        
+    if turtle.ycor() > 275:
+        turtle.sety(275)
+        turtle.setheading(-turtle.heading())
+    if turtle.ycor() < -275:
+        turtle.sety(-275)
+        turtle.setheading(-turtle.heading())
 
 while True:
     move_forward(yertle)
     yertle.pendown()
+
 screen.exitonclick()
