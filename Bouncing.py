@@ -4,6 +4,29 @@ import random
 def generate_color():
     return f"#{random.randint(0, 0xFFFFFF):06x}"
 
+def create_player():
+    global player
+    player=Turtle()
+    player.speed(0)
+    player.shape("square")
+    player.color("white")
+
+def up():
+    global player 
+    player.sety(player.ycor()+10)
+
+def down():
+    global player
+    player.sety(player.ycor()-10)
+
+def left():
+    global player
+    player.setx(player.xcor()-10)
+
+def right():
+    global player 
+    player.setx(player.xcor()+10)
+
 def playing_area():
     t = Turtle()
     t.speed(0)
@@ -43,13 +66,24 @@ def move_with_heading(t):
 screen = Screen()
 screen.bgcolor("black")
 screen.setup(520, 520)
+screen.listen()
+screen.onkeypress(create_player,"space")
+screen.onkeypress(up,"Up")
+screen.onkeypress(down,"Down")
+screen.onkeypress(right,"Right")
+screen.onkeypress(left,"Left")
 
 playing_area()
 turtles = [create_turtle()]
+player = None
 
 while True:
-    for yertle in turtles:
-        if move_with_heading(yertle):
+    for yertle in turtles[:]:
+        should_spawn = move_with_heading(yertle)
+        if should_spawn:
             turtles.append(create_turtle())
 
-screen.exitonclick()
+        if player is not None and player.distance(yertle) < 20: 
+            yertle.hideturtle()
+            turtles.remove(yertle)
+            
